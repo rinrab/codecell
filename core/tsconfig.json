@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "compilerOptions": {
+    "module": "System",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outFile": "./core.js",
+    "allowJs": true
+  },
+  "files": [
+    "./utils.ts",
+    "./tokenizer.ts",
+    "./tree.ts",
+    "./calc.ts",
+    "./core.ts",
+    "./style.ts",
+    "./cell-selector.ts",
+    "./ast-formula/tokenizer.ts",
+    "./ast-formula/token-stream.ts",
+    "./ast-formula/shunting-yard.ts",
+    "./ast-formula/node-builder.ts",
+    "./ast-formula/build-tree.ts",
+    "../lib/formulajs/init.js",
+    "../lib/formulajs/utils.js",
+    "../lib/formulajs/error.js",
+    "../lib/formulajs/database.js",
+    "../lib/formulajs/date-time.js",
+    "../lib/formulajs/engineering.js",
+    "../lib/formulajs/financial.js",
+    "../lib/formulajs/logical.js",
+    "../lib/formulajs/lookup-reference.js",
+    "../lib/formulajs/math-trig.js",
+    "../lib/formulajs/miscellaneous.js",
+    "../lib/formulajs/statistical.js",
+    "../lib/formulajs/text.js",
+    "./ast-formula/calc.ts",
+    "./ast-formula/formula-list.ts",
+    "./export.ts"
+  ]
+}
