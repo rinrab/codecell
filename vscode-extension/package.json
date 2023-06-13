@@ -1,0 +1,114 @@
+{
+  "name": "codecell",
+  "displayName": "CodeCell",
+  "description": "Edit tables with code.",
+  "version": "0.1.3",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "icon": "media/icon.png",
+  "publisher": "rinrab",
+  "keywords": [
+    "CodeCell",
+    "markdown",
+    "sheets",
+    "tables"
+  ],
+  "repository": {
+    "type": "none",
+    "url": "none",
+    "directory": "none"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization",
+    "Data Science",
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:codecell",
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "files": [
+    "./out/core.js"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codecell.showPreviewToSide",
+        "title": "Open preview to the side",
+        "category": "CodeCell",
+        "icon": {
+          "dark": "./media/find-preview-dark.svg",
+          "light": "./media/find-preview-dark.svg"
+        }
+      },
+      {
+        "command": "codecell.showPreview",
+        "title": "Open preview",
+        "category": "CodeCell"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "codecell.showPreviewToSide",
+          "group": "navigation",
+          "when": "resourceLangId == codecell",
+          "alt": "codecell.showPreview"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "codecell.showPreview",
+        "key": "ctrl+shift+v",
+        "when": "resourceLangId == codecell"
+      },
+      {
+        "command": "codecell.showPreviewToSide",
+        "key": "ctrl+k v",
+        "when": "resourceLangId == codecell"
+      }
+    ],
+    "markdown.markdownItPlugins": true,
+    "languages": [
+      {
+        "id": "codecell",
+        "extensions": [
+          ".codecell"
+        ],
+        "icon": {
+          "dark": "./media/codecell.svg",
+          "light": "./media/codecell.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "codecell",
+        "scopeName": "source.codecell",
+        "path": "./syntaxes/codecell.tmGrammar.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm run build-core && tsc -p ./",
+    "build-core": "tsc -p ../core/tsconfig.json --outFile core.js",
+    "watch": "npm run build-core && tsc --watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.72.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "markdown-it": "^13.0.1"
+  }
+}

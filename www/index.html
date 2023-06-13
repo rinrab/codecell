@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Txt Excel</title>
+  <script src='../core/core.js'></script>
+  <script src='./index.js'></script>
+  <script src="./bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bootstrap.min.css" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="row h-100">
+      <div class="col-6 p-0" style="height: 0vh">
+        <div id="editor" class="code"></div>
+      </div>
+      <div class="col-6" style="height: 100vh ;padding: 0">
+        <div class="w-100 d-flex" style="padding-right: 0.25rem">
+          <label id="formula-line" class="col px-1 my-1 border rounded code"></label>
+          <label id="message" class="col-auto bg-black text-white px-2 m-1 border rounded" style="opacity: 0;font-size:12px;padding-top:3px;" hidden></label>
+          <button id="export" class="col-auto btn btn-sm btn-primary m-1 py-0"
+                  data-bs-toggle="modal" data-bs-target="#export-modal">Export</button>
+        </div>
+        <div class="table-container">
+          <table class="table table-bordered" id="table" style="font-family: Calibri, Carlito;">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="tabs" class="btn-group">
+          <input class="btn-check" type="radio" name="page" id="page-0" />
+          <label class="btn-sm btn btn-outline-primary" for="page-0">Tab 1</label>
+          <input class="btn-check" type="radio" name="page" id="page-1" />
+          <label class="btn-sm btn btn-outline-primary" for="page-1">Tab 2</label>
+          <input class="btn-check" type="radio" name="page" id="page-2" />
+          <label class="btn-sm btn btn-outline-primary" for="page-2">Tab 3</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="export-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Export</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="mb-3">
+              <label class="form-label" for="export-formulas">Export formulas or values</label>
+              <select class="form-select col" id="export-formulas">
+                <option>Values</option>
+                <option>Formulas</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="export-ext">Extention</label>
+              <select class="form-select col" id="export-ext">
+                <option>Markdown</option>
+                <option>CSV</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <input class="form-check-input" type="checkbox" id="export-minify">
+              <label class="form-check-label" for="export-minify">Minify</label>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="export-preview">Preview</label>
+              <textarea class="form-control code" id="export-preview" style="height: 300px" readonly></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-primary" id="export-copy">Copy</button>
+          <button class="btn btn-outline-primary" id="export-download">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+{
+  "scopeName": "source.codecell",
+  "patterns": [
+    {
+      "include": "#expression"
+    }
+  ],
+  "repository": {
+    "expression": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#cell-selector"
+        },
+        {
+          "include": "#paren-expression"
+        },
+        {
+          "include": "#quota"
+        }
+      ]
+    },
+    "comment": {
+      "match": "#.*\n|#.*$",
+      "name": "comment.letter"
+    },
+    "cell-selector": {
+      "match": "(\\${0,1}[A-Z]\\${0,1}[0-9]+)-{0,1}:{0,1}|(-+):",
+      "name": "keyword.letter"
+    },
+    "number": {
+      "match": "[0-9]",
+      "name": "number.letter"
+    },
+    "quota": {
+      "match": "(\")((?:(?!\\1).|\\\\.)*)(?:\\1|$)",
+      "name": "string.letter"
+    }
+  }
+}

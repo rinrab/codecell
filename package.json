@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "build": "tsc -p www/tsconfig.json && tsc -p core/tsconfig.json && tsc -p tests/tsconfig.json && tsc -p vscode-extension/tsconfig.json",
+        "update": "npm update && cd vscode-extension && npm update" ,
+        "init": "npm run update && npm run build"
+    },
+    "dependencies": {
+        "typescript": "^5.1.3"
+    }
+}

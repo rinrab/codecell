@@ -1,0 +1,13 @@
+node_modules
+.vs
+vscode-extension/out
+vscode-extension/node_modules
+vscode-extension/core.js
+vscode-extension/core.js.map
+package-lock.json
+core/core.js
+core/core.js.map
+www/index.js
+www/index.js.map
+tests/tests.js
+tests/tests.js.map
