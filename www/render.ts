@@ -117,7 +117,7 @@ function renderTable(data: Data, html: RenderData) {
         for (let x = 0; x < maxWidth; x++) {
             const newCol = <HTMLTableCellElement>document.createElement("td");
             let val = data.values.get(x, y);
-            const style = data.styles.get(x, y);
+            const style = <Core.IStyle>data.styles.get(x, y);
 
             let type;
             switch (typeof val) {

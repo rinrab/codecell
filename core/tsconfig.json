@@ -7,6 +7,7 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "outFile": "./core.js",
+    "declaration": true,
     "allowJs": true
   },
   "files": [
@@ -22,7 +23,7 @@
     "./ast-formula/shunting-yard.ts",
     "./ast-formula/node-builder.ts",
     "./ast-formula/build-tree.ts",
-    "../lib/formulajs/init.js",
+    "../lib/formulajs/init.ts",
     "../lib/formulajs/utils.js",
     "../lib/formulajs/error.js",
     "../lib/formulajs/database.js",

@@ -5,6 +5,7 @@ vscode-extension/node_modules
 vscode-extension/core.js
 vscode-extension/core.js.map
 core/core.js
+core/core.d.ts
 core/core.js.map
 www/index.js
 www/index.js.map
