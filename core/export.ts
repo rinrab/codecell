@@ -89,7 +89,7 @@
                 if (isFormulas) {
                     text += prepareCSVCell(cell, minify);
                 } else {
-                    text += cell.toString().replace(/"/g, '""');
+                    text += cell.toString();
                 }
 
                 if (x != data[y].length - 1) {
