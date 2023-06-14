@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm update
-      - run: tsc -p core/tsconfig.json --outfile www/core/core.js
+      - run: tsc -p core/tsconfig.json
       - run: tsc -p www/tsconfig.json
       - name: Setup Pages
         uses: actions/configure-pages@v3
