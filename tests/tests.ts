@@ -3,15 +3,15 @@
 
 QUnit.module("parseCellSelector", () => {
     QUnit.test("standart tests", (assert) => {
-        assert.equal(Core.parseCellSelector("A1").col, 0);
-        assert.equal(Core.parseCellSelector("A1").row, 1);
-        assert.equal(Core.parseCellSelector("F123").col, 5);
-        assert.equal(Core.parseCellSelector("F123").row, 123);
+        assert.equal((<Core.SimpleCellSelector>Core.parseCellSelector("A1")).col, 0);
+        assert.equal((<Core.SimpleCellSelector>Core.parseCellSelector("A1")).row, 1);
+        assert.equal((<Core.SimpleCellSelector>Core.parseCellSelector("F123")).col, 5);
+        assert.equal((<Core.SimpleCellSelector>Core.parseCellSelector("F123")).row, 123);
 
-        assert.equal(Core.parseCellSelector("A1-B2").start.col, 0);
-        assert.equal(Core.parseCellSelector("A1-B2").start.row, 1);
-        assert.equal(Core.parseCellSelector("A1-B2").end.col, 1);
-        assert.equal(Core.parseCellSelector("A1-B2").end.row, 2);
+        assert.equal((<Core.RangeCellSelector>Core.parseCellSelector("A1-B2")).start.col, 0);
+        assert.equal((<Core.RangeCellSelector>Core.parseCellSelector("A1-B2")).start.row, 1);
+        assert.equal((<Core.RangeCellSelector>Core.parseCellSelector("A1-B2")).end.col, 1);
+        assert.equal((<Core.RangeCellSelector>Core.parseCellSelector("A1-B2")).end.row, 2);
     });
     QUnit.test("error tests", (assert) => {
         assert.equal(Core.parseCellSelector(":("), null);
@@ -79,7 +79,7 @@ QUnit.module("parse", () => {
                         selector: Core.parseCellSelector("A2"), values: [{ type: Core.TreeValueType.Number, value: 456, src: "456" }] }
                 ]
             },
-            viewbox: Core.parseCellSelector("A1-A2")
+            viewbox: <Core.RangeCellSelector>Core.parseCellSelector("A1-A2")
         };
         assert.deepEqual(tree, expect);
     });
