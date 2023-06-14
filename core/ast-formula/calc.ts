@@ -36,8 +36,8 @@ function getValue(operator: Operator, calcData: FormulaCalcData): ValueType {
             if (cellSelector) {
                 let x = (cellSelector.isColFixed) ? cellSelector.col : cellSelector.col + calcData.offsetX;
                 let y = (cellSelector.isRowFixed) ? cellSelector.row : cellSelector.row + calcData.offsetY;
-                const table = calcData.tables[cellSelector.sheet || calcData.curTable];
-                const cell = table.get(x, y);
+                const tableName = cellSelector.sheet || calcData.curTable;
+                const cell = calcData.tables[tableName].get(x, y);
 
                 if (cell && (<Core.ExpressionTableCell>cell).isExpressionCell) {
                     let expressionCell = <Core.ExpressionTableCell>cell;
@@ -47,7 +47,7 @@ function getValue(operator: Operator, calcData: FormulaCalcData): ValueType {
                         throw error.ref;
                     }
                     expressionCell.was = true;
-                    const val = calcFormula(expressionCell.expression, calcData.curTable,
+                    const val = calcFormula(expressionCell.expression, tableName,
                         calcData.tables, expressionCell.offsetX, expressionCell.offsetY);
                     expressionCell.value = val;
                     expressionCell.was = false;
@@ -81,8 +81,10 @@ function getValue(operator: Operator, calcData: FormulaCalcData): ValueType {
             }
 
             let values: (string | number | boolean)[] = [];
-            for (const coard of Core.getCellCoards(cellRangeSelector, calcData.offsetX, calcData.offsetY)) {
-                const cell = calcData.tables[coard.sheet || calcData.curTable].get(coard.col, coard.row);
+            const coards = Core.getCellCoards(cellRangeSelector, calcData.offsetX, calcData.offsetY);
+            const tableName = cellRangeSelector.start.sheet || calcData.curTable;
+            for (const coard of coards) {
+                const cell = calcData.tables[tableName].get(coard.col, coard.row);
 
                 if (cell && (<Core.ExpressionTableCell>cell).isExpressionCell) {
                     let expressionCell = <Core.ExpressionTableCell>cell;
@@ -92,7 +94,7 @@ function getValue(operator: Operator, calcData: FormulaCalcData): ValueType {
                         throw error.ref;
                     } else {
                         expressionCell.was = true;
-                        const val = calcFormula(expressionCell.expression, calcData.curTable, calcData.tables,
+                        const val = calcFormula(expressionCell.expression, tableName, calcData.tables,
                             expressionCell.offsetX, expressionCell.offsetY);
                         expressionCell.value = val;
                         expressionCell.was = false;
