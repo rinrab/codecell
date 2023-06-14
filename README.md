@@ -32,7 +32,7 @@ For details see: [specification.md](/docs/spec-draft.md)
 
 1. Install vscode
 2. Install nodejs
-3. Get working copy from */codecell/trunk
+3. Get working copy from https://github.com/rinrab/codecell
 4. Open working copy in vscode
 5. Open terminal using ctrl+` or View > Terminal
 6. Run command `npm run init`. It'll install all needed packages and build project
