@@ -15,11 +15,7 @@
     "sheets",
     "tables"
   ],
-  "repository": {
-    "type": "none",
-    "url": "none",
-    "directory": "none"
-  },
+  "repository": "rinrab/codecell",
   "categories": [
     "Programming Languages",
     "Visualization",
