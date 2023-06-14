@@ -301,7 +301,7 @@ declare function parseLogical(stream: TokenStream): Operator;
 declare function parseNumber(stream: TokenStream): Operator;
 declare function createUnaryOperator(symbol: string): Operator;
 declare function createBinaryOperator(symbol: string): Operator;
-declare const formula: {};
+declare const formula: any;
 declare function flattenShallow(array: any): any;
 declare function isFlat(array: any): boolean;
 declare namespace utils {
