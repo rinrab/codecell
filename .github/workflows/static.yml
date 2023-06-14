@@ -35,7 +35,8 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
-      - run: npm ci
+      - name: build
+      - run: npm update
       - run: tsc -p www/tsconfig.json
       - run: tsc -p core/tsconfig.json
       - run: tsc -p tests/tsconfig.json
