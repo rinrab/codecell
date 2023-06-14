@@ -1,1 +1,1 @@
-const formula = {};
+const formula: any = {};
