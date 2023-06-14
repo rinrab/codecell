@@ -24,9 +24,7 @@ It'll render next table
 | **1** |    1 |    2 |    3 |
 | **2** |    4 |    5 |   10 |
 
-For details see: [specification.md](/docs/spec-draft.md)
-
-[//]: <> (TODO: change path from spec-draft.ms to spec.md)
+For details see: [spec](/docs/spec.md)
 
 ## For developers
 
