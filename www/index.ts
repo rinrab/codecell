@@ -16,13 +16,13 @@ namespace Main {
     let selectedPage: string;
 
     const text =
-        'A1: "Power of 2", "Col A + 1", "Col A * 2", "бонаааны"\n' +
+        'A1: "Power of 2", "Col A + 1", "Col A * 2", "BANAnNnNAS"\n' +
         "A2: 1\n" +
         "A3-A20: =A2 * 2\n" +
         "B2-B20: =A2 - 1\n" +
         "C2-C20: =A2 * 2\n" +
-        '# Без бонанов нельзя\n' +
-        'D2-D20: ="бонаааанны" & " - " & A2';
+        '# BANAnNnNAS\n' +
+        'D2-D20: ="BANAnNnNAS" & " - " & A2';
 
     const keyWordRegex = new RegExp('(\\b(?=\\w)' + (<string[]>Object.keys(formulas)).join('|') + '\\b(?<=\\w))', "gm");
 
