@@ -28,7 +28,7 @@ namespace Main {
 
     let exportBtn: HTMLButtonElement;
     let exportFormula: HTMLSelectElement;
-    let exportExtention: HTMLSelectElement;
+    let exportExtension: HTMLSelectElement;
     let exportMinify: HTMLInputElement;
     let exportPreview: HTMLTextAreaElement;
 
@@ -66,13 +66,13 @@ namespace Main {
 
         exportBtn = <HTMLButtonElement>document.getElementById("export");
         exportFormula = <HTMLSelectElement>document.getElementById("export-formulas");
-        exportExtention = <HTMLSelectElement>document.getElementById("export-ext");
+        exportExtension = <HTMLSelectElement>document.getElementById("export-ext");
         exportMinify = <HTMLInputElement>document.getElementById("export-minify");
         exportPreview = <HTMLTextAreaElement>document.getElementById("export-preview");
 
         exportBtn.addEventListener("click", updateExport);
         exportFormula.addEventListener("change", updateExport);
-        exportExtention.addEventListener("change", updateExport);
+        exportExtension.addEventListener("change", updateExport);
         exportMinify.addEventListener("click", updateExport);
 
         document.getElementById("export-copy").addEventListener("click", () => {
@@ -81,8 +81,8 @@ namespace Main {
 
         document.getElementById("export-download").addEventListener("click", () => {
             let file = new Blob([exportText]);
-            let extentions = ["md", "csv"];
-            let name = "codecell-untitled." + extentions[exportExtention.selectedIndex];
+            let extensions = ["md", "csv"];
+            let name = "codecell-untitled." + extensions[exportExtension.selectedIndex];
             let url = URL.createObjectURL(file);
             try {
                 let linkElem = document.createElement("a");
@@ -134,9 +134,9 @@ namespace Main {
             table = calculated.tables[selectedPage].formulas;
         }
 
-        if (exportExtention.selectedIndex == 0) {
+        if (exportExtension.selectedIndex == 0) {
             exportText = ExportTable.MarkDown(table, exportMinify.checked);
-        } else if (exportExtention.selectedIndex == 1) {
+        } else if (exportExtension.selectedIndex == 1) {
             exportText = ExportTable.CSV(table, exportMinify.checked);
         }
 
