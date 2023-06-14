@@ -10,6 +10,7 @@
     "allowJs": true
   },
   "files": [
+    "../core/core.js",
     "../lib/codejar/codejar.ts",
     "./render.ts",
     "./index.ts"
