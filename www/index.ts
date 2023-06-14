@@ -137,7 +137,7 @@ namespace Main {
         if (exportExtension.selectedIndex == 0) {
             exportText = ExportTable.MarkDown(table, exportMinify.checked);
         } else if (exportExtension.selectedIndex == 1) {
-            exportText = ExportTable.CSV(table, exportMinify.checked);
+            exportText = ExportTable.CSV(table, exportMinify.checked, exportFormula.selectedIndex == 0);
         }
 
         exportPreview.value = exportText;

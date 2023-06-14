@@ -369,5 +369,5 @@ type Formulas = {
 declare const formulas: Formulas;
 declare namespace ExportTable {
     function MarkDown(table: Core.Table<string | number | boolean>, minify: boolean): string;
-    function CSV(table: Core.Table<string | number | boolean | null>, minify: boolean): string;
+    function CSV(table: Core.Table<string | number | boolean | null>, minify: boolean, isFormulas: boolean): string;
 }

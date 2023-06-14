@@ -71,14 +71,14 @@
         } else {
             text = text.toString();
             text = text.replace(/"/g, '""');
-            if (text.search(minify ? /"/g: / |,|"/g) != -1) {
+            if (text.search(minify ? /"/g : / |,|"/g) != -1) {
                 text = '"' + text + '"';
             }
             return text;
         }
     }
 
-    export function CSV(table: Core.Table<string | number | boolean | null>, minify: boolean): string {
+    export function CSV(table: Core.Table<string | number | boolean | null>, minify: boolean, isFormulas: boolean): string {
         let text = "";
 
         const data: (number | string | boolean | null)[][] = table.data;
@@ -86,7 +86,12 @@
         for (let y = 1; y < data.length; y++) {
             for (let x = 0; x < data[y].length; x++) {
                 let cell = data[y][x];
-                text += prepareCSVCell(cell, minify);
+                if (isFormulas) {
+                    text += prepareCSVCell(cell, minify);
+                } else {
+                    text += cell.toString().replace(/"/g, '""');
+                }
+
                 if (x != data[y].length - 1) {
                     text += ',';
                 }
