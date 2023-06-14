@@ -4,7 +4,6 @@ vscode-extension/out
 vscode-extension/node_modules
 vscode-extension/core.js
 vscode-extension/core.js.map
-package-lock.json
 core/core.js
 core/core.js.map
 www/index.js
