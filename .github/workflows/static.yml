@@ -35,8 +35,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm run update
-      - run: npm run build
+      - run: npm ci
+      - run: tsc -p www/tsconfig.json
+      - run: tsc -p core/tsconfig.json
+      - run: tsc -p tests/tsconfig.json
   # Single deploy job since we're just deploying
   deploy:
     environment:
