@@ -131,7 +131,7 @@ namespace Main {
         if (exportFormula.selectedIndex == 0) {
             table = calculated.tables[selectedPage].values;
         } else {
-            table = calculated.tables[selectedPage].values;
+            table = calculated.tables[selectedPage].formulas;
         }
 
         if (exportExtention.selectedIndex == 0) {
