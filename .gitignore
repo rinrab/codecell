@@ -11,3 +11,5 @@ www/index.js
 www/index.js.map
 tests/tests.js
 tests/tests.js.map
+xlsx/index.js
+xlsx/index.js.map

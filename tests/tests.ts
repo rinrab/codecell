@@ -1,5 +1,6 @@
 ﻿/// <reference path="qunit.d.ts" />
 /// <reference path="../core/core.d.ts" />
+/// <reference path="../xlsx/index.ts" />
 
 QUnit.module("parseCellSelector", () => {
     QUnit.test("standart tests", (assert) => {
@@ -74,9 +75,12 @@ QUnit.module("parse", () => {
                 "UNTITLED": [
                     {
                         selector: Core.parseCellSelector("A1"), values: [{
-                            type: Core.TreeValueType.Number, value: 123, src: "123" }] },
+                            type: Core.TreeValueType.Number, value: 123, src: "123"
+                        }]
+                    },
                     {
-                        selector: Core.parseCellSelector("A2"), values: [{ type: Core.TreeValueType.Number, value: 456, src: "456" }] }
+                        selector: Core.parseCellSelector("A2"), values: [{ type: Core.TreeValueType.Number, value: 456, src: "456" }]
+                    }
                 ]
             },
             viewbox: <Core.RangeCellSelector>Core.parseCellSelector("A1-A2")
@@ -250,9 +254,11 @@ QUnit.module("calc", () => {
                         selector: Core.parseCellSelector("A1"),
                         values: [
                             {
-                                type: Core.TreeValueType.Number, value: 123, src: "123" },
+                                type: Core.TreeValueType.Number, value: 123, src: "123"
+                            },
                             {
-                                type: Core.TreeValueType.Expression, value: parseFormula(tokenizeFormula("=1+2+3", defaultLanguage)), src: "1+2+3" },
+                                type: Core.TreeValueType.Expression, value: parseFormula(tokenizeFormula("=1+2+3", defaultLanguage)), src: "1+2+3"
+                            },
                             { type: Core.TreeValueType.Text, value: "abc", src: "abc" }
                         ]
                     },
@@ -355,5 +361,22 @@ QUnit.module("stream", () => {
         assert.equal(stream.pick(), 'a');
         stream.restore(save);
         assert.equal(stream.pick(), 'b');
+    });
+});
+
+
+QUnit.module("xlsx", () => {
+    QUnit.test("test 1", (assert) => {
+        var done1 = assert.async();
+
+        var file = new XMLHttpRequest();
+        file.open("GET", "testFiles/sheet1.xml");
+        file.send();
+        file.onreadystatechange = () => {
+            if (file.readyState == 4 && file.status == 200) {
+                assert.equal(xlsx.parseSheet(file.responseText), `A2-C2: =A1+1\nA1: 1, 2, 3\n`);
+                done1();
+            }
+        };
     });
 });
