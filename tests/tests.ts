@@ -366,7 +366,7 @@ QUnit.module("stream", () => {
 
 
 QUnit.module("xlsx", () => {
-    QUnit.test("test 1", (assert) => {
+    QUnit.test("parse sheet", (assert) => {
         var done1 = assert.async();
 
         var file = new XMLHttpRequest();
@@ -376,6 +376,23 @@ QUnit.module("xlsx", () => {
             if (file.readyState == 4 && file.status == 200) {
                 assert.equal(xlsx.parseSheet(file.responseText), `A2-C2: =A1+1\nA1: 1, 2, 3\n`);
                 done1();
+            }
+        };
+    });
+
+    QUnit.test("parse xlsx", (assert) => {
+        var done1 = assert.async();
+
+        var file = new XMLHttpRequest();
+        file.open("GET", "testFiles/sheet1.xlsx");
+        file.responseType = "arraybuffer";
+        file.send();
+        file.onreadystatechange = () => {
+            if (file.readyState == 4 && file.status == 200) {
+                xlsx.parseXLSX(file.response, (value: string) => {
+                    assert.equal(value, `@Sheet1\nB2-C2: =(B1+1)*2\nA1: 1, 2, 3\n\n`);
+                    done1();
+                })
             }
         };
     });

@@ -1,3 +1,5 @@
+/// <reference path="../lib/jszip/jszip.d.ts" />
+
 namespace xlsx {
     interface SimpleCellSelector {
         col: number;
@@ -60,7 +62,6 @@ namespace xlsx {
     }
 
     function cellSelectorToString(selector: CellSelector) {
-        console.log(selector);
         if (selector.isRange) {
             return alphabet[selector.start.col] + selector.start.row + '-' +
                 alphabet[selector.end.col] + selector.end.row;
@@ -135,8 +136,43 @@ namespace xlsx {
             rv += cellSelectorToString(item.left) + ": " + item.right + "\n";
         }
 
-        console.log(rv);
-
         return rv;
+    }
+
+    export function parseXLSX(data: ArrayBuffer, then: (value: string) => any) {
+        let a = JSZip.loadAsync(data, {});
+        let rv = "";
+
+        a.then((value: JSZip) => {
+            value.file("xl/workbook.xml").async("string").then((workbook: string) => {
+                let workbookDOMParser = new DOMParser();
+                let workbookDOM = workbookDOMParser.parseFromString(workbook, "application/xml");
+                const wbSheets = workbookDOM.querySelectorAll("sheets>sheet");
+                const names: {[key: string]: string} = {};
+                wbSheets.forEach((value: Element) => {
+                    names["sheet" + value.getAttribute("sheetId") + ".xml"] = value.getAttribute("name");
+                });
+
+                let doneCount = 0, count = 0;
+                const files = value.folder("xl/worksheets");
+                const sheets: { name: string, content: string }[] = [];
+
+                files.forEach((realativePath: string, file: JSZip.JSZipObject) => {
+                    count++;
+                    file.async("string").then((value: string) => {
+                        const name = realativePath;
+                        sheets.push({ name: names[name], content: parseSheet(value) });
+                        doneCount++;
+                        if (doneCount == count) {
+                            let text = "";
+                            for (const sheet of sheets) {
+                                text += `@${sheet.name}\n${sheet.content}\n`;
+                            }
+                            then(text);
+                        }
+                    });
+                });
+            });
+        })
     }
 }

@@ -4,8 +4,6 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
-/// <reference types="node" />
-
 interface JSZipSupport {
     arraybuffer: boolean;
     uint8array: boolean;
@@ -32,7 +30,6 @@ interface InputByType {
     uint8array: Uint8Array;
     arraybuffer: ArrayBuffer;
     blob: Blob;
-    stream: NodeJS.ReadableStream;
 }
 
 interface OutputByType {
@@ -44,7 +41,6 @@ interface OutputByType {
     uint8array: Uint8Array;
     arraybuffer: ArrayBuffer;
     blob: Blob;
-    nodebuffer: Buffer;
 }
 
 // This private `_data` property on a JSZipObject uses this interface.
@@ -94,7 +90,6 @@ declare namespace JSZip {
          * @return Promise the promise of the result.
          */
         async<T extends OutputType>(type: T, onUpdate?: OnUpdateCallback): Promise<OutputByType[T]>;
-        nodeStream(type?: 'nodebuffer', onUpdate?: OnUpdateCallback): NodeJS.ReadableStream;
     }
 
     interface JSZipFileOptions {
@@ -167,7 +162,6 @@ declare namespace JSZip {
         checkCRC32?: boolean;
         optimizedBinaryString?: boolean;
         createFolders?: boolean;
-        decodeFileName?: (bytes: string[] | Uint8Array | Buffer) => string;
     }
 
     type DataEventCallback<T> = (dataChunk: T, metadata: JSZipMetadata) => void
@@ -291,7 +285,6 @@ interface JSZip {
      * @param onUpdate The optional function called on each internal update with the metadata.
      * @return A Node.js `ReadableStream`
      */
-    generateNodeStream(options?: JSZip.JSZipGeneratorOptions<'nodebuffer'>, onUpdate?: JSZip.OnUpdateCallback): NodeJS.ReadableStream;
 
     /**
      * Generates the complete zip file with the internal stream implementation
@@ -326,5 +319,3 @@ interface JSZip {
 }
 
 declare var JSZip: JSZip;
-
-export = JSZip;
