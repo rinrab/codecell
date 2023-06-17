@@ -163,6 +163,8 @@ interface QUnitAssert {
 	current_testEnvironment: any;
 	jsDump: any;
 
+	async(): () => void;
+
 	/**
 	* A deep recursive comparison assertion, working on primitive types, arrays, objects, 
 	* regular expressions, dates and functions.
