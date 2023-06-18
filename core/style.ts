@@ -122,7 +122,7 @@ namespace Core {
         if (getStyleProperty("textDecoration")) {
             css += "text-decoration:" + getStyleProperty("textDecoration") + ";";
         }
-        if (value) {
+        if (value != null && value != undefined) {
             value = `<span style="${css}">${value}</span>`;
             return value;
         } else {
