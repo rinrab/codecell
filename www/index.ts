@@ -1,4 +1,6 @@
 ﻿/// <reference path="../core/core.d.ts" />
+/// <reference path="../xlsx/index.d.ts" />
+
 
 function escapeHtml(str: string): string {
     return str
@@ -93,6 +95,17 @@ namespace Main {
             finally {
                 URL.revokeObjectURL(url);
             }
+        });
+
+        var fileInput = <HTMLInputElement>document.getElementById("import-xlsx");
+        fileInput.addEventListener("change", function () {
+            var fileReader = new FileReader()
+            fileReader.readAsArrayBuffer(fileInput.files[0]);
+            fileReader.addEventListener("load", () => {
+                xlsx.parseXLSX(<ArrayBuffer>fileReader.result, (value: string) => {
+                    jar.updateCode(value);
+                });
+            });
         });
 
         update();

@@ -14,13 +14,19 @@
     <div class="row h-100">
       <div class="col-6 p-0" style="height: 0vh">
         <div id="editor" class="code"></div>
+        <label class="btn btn-sm btn-primary position-absolute" for="import-xlsx"
+          style="bottom: 0; left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+          <span>Import from xlsx</span>
+          <input type="file" id="import-xlsx" accept=".xlsx" style="display:none">
+        </label>
       </div>
       <div class="col-6" style="height: 100vh ;padding: 0">
         <div class="w-100 d-flex" style="padding-right: 0.25rem">
           <label id="formula-line" class="col px-1 my-1 border rounded code"></label>
-          <label id="message" class="col-auto bg-black text-white px-2 m-1 border rounded" style="opacity: 0;font-size:12px;padding-top:3px;" hidden></label>
-          <button id="export" class="col-auto btn btn-sm btn-primary m-1 py-0"
-                  data-bs-toggle="modal" data-bs-target="#export-modal">Export</button>
+          <label id="message" class="col-auto bg-black text-white px-2 m-1 border rounded"
+            style="opacity: 0;font-size:12px;padding-top:3px;" hidden></label>
+          <button id="export" class="col-auto btn btn-sm btn-primary m-1 py-0" data-bs-toggle="modal"
+            data-bs-target="#export-modal">Export</button>
         </div>
         <div class="table-container">
           <table class="table table-bordered" id="table" style="font-family: Calibri, Carlito;">

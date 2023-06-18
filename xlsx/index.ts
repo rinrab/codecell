@@ -78,6 +78,7 @@ namespace xlsx {
     export function parseSheet(text: string) {
         let rv = "";
         const parser = new DOMParser();
+        console.log(text);
         const xml = parser.parseFromString(text, "application/xml");
 
         const rows = xml.querySelectorAll("sheetData>row");
@@ -102,14 +103,16 @@ namespace xlsx {
                 } else {
                     left = cell.getAttribute("r");
                     const value = cell.querySelector("v");
-                    right = value.innerHTML;
-                    if (!isNaN(parseFloat(right))) {
-                        right = parseFloat(right).toString();
+                    if (value) {
+                        right = value.innerHTML;
+                        if (!isNaN(parseFloat(right))) {
+                            right = parseFloat(right).toString();
+                        }
+                        tree.push({
+                            left: parseCellSelector(left),
+                            right: right
+                        });
                     }
-                    tree.push({
-                        left: parseCellSelector(left),
-                        right: right
-                    });
                 }
             });
         });
@@ -148,7 +151,7 @@ namespace xlsx {
                 let workbookDOMParser = new DOMParser();
                 let workbookDOM = workbookDOMParser.parseFromString(workbook, "application/xml");
                 const wbSheets = workbookDOM.querySelectorAll("sheets>sheet");
-                const names: {[key: string]: string} = {};
+                const names: { [key: string]: string } = {};
                 wbSheets.forEach((value: Element) => {
                     names["sheet" + value.getAttribute("sheetId") + ".xml"] = value.getAttribute("name");
                 });
