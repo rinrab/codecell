@@ -72,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function getHtml(text: string, headers: string): string {
-    const calculated = codecell.parse(text);
+    const calculated = codecell.Core.parse(text);
     let rv = "";
     console.log(calculated);
     if (calculated.errors.length > 0) {
@@ -158,7 +158,7 @@ function renderTable(values: (string | number | boolean | null)[][], styleTable:
     }
 
     for (let i = startX; i <= endX; i++) {
-        html += "<th>" + escapeHtml(codecell.alphabet[i]) + "</th>";
+        html += "<th>" + escapeHtml(codecell.Core.alphabet[i]) + "</th>";
     }
     html += "</tr>";
 
@@ -177,7 +177,7 @@ function renderTable(values: (string | number | boolean | null)[][], styleTable:
                 val = "";
             }
             const styleCell = styleTable.get(x, y) || {};
-            html += `<td style="${style}"}>${codecell.renderStyle(val, styleCell)}</td>`;
+            html += `<td style="${style}"}>${codecell.Core.renderStyle(val, styleCell)}</td>`;
         }
         html += "</tr>";
     }

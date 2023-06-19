@@ -38,6 +38,7 @@
     "../lib/formulajs/text.js",
     "./ast-formula/calc.ts",
     "./ast-formula/formula-list.ts",
-    "./export.ts"
+    "./export.ts",
+    "./add-to-node.ts"
   ]
 }

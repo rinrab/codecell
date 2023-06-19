@@ -50,10 +50,3 @@
         return table;
     }
 }
-
-declare let module: any;
-try {
-    if (module) {
-        module.exports = Core;
-    }
-} catch (ex) { }
