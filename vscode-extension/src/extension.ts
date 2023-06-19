@@ -43,19 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     return {
         extendMarkdownIt(md: MarkdownIt) {
-            const defaultRenderer = md.renderer.rules.fence;
-            md.renderer.rules.fence = function (tokens, idx, options, env, self) {
-                const token = tokens[idx];
-                if (token.info.trim() === "codecell") {
-                    return getHtml(token.content, "b");
-                } else {
-                    if (defaultRenderer) {
-                        return defaultRenderer(tokens, idx, options, env, self);
-                    } else {
-                        return "";
-                    }
-                }
-            };
             const defaultHighlighter = md.options.highlight;
             md.options.highlight = function (str: string, lang: string, attrs: string): string {
                 if (lang == "codecell") {
@@ -66,6 +53,37 @@ export function activate(context: vscode.ExtensionContext) {
                     return "";
                 }
             };
+
+            const defaultRenderer = md.renderer.rules.fence;
+            md.renderer.rules.fence = function (tokens, idx, options, env, self) {
+                const token = tokens[idx];
+                const info = token.info.trim();
+                if (info === "codecell") {
+                    return getHtml(token.content, "b");
+                } else if (info === "codecell-csv" || info === "codecell csv") {
+                    const calculated = codecell.Core.parse(token.content);
+                    console.log(calculated)
+                    let text = "";
+                    const names = Object.keys(calculated.tables);
+                    for (let i = 0; i < names.length; i++) {
+                        if (names.length != 1) {
+                            text += `<b># ${names[i]}</b>\n`;
+                        }
+                        text += escapeHtml(codecell.ExportTable.CSV(calculated.tables[names[i]].values, false, true));
+                        if (i != names.length - 1) {
+                            text += '\n';
+                        }
+                    }
+                    return `<pre><code class="code-line language-csv">${text}</code></pre>`;
+                } else {
+                    if (defaultRenderer) {
+                        return defaultRenderer(tokens, idx, options, env, self);
+                    } else {
+                        return "";
+                    }
+                }
+            };
+
             return md;
         }
     };
