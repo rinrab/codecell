@@ -36,8 +36,9 @@
       "name": "number.letter"
     },
     "quota": {
-      "match": "(\")((?:(?!\\1).|\\\\.)*)(?:\\1|$)",
-      "name": "string.letter"
+      "name": "string.letter",
+      "begin": "\"",
+      "end": "\"|$|\n"
     }
   }
 }
