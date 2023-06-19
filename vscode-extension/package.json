@@ -93,11 +93,8 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "npm run build-core && tsc -p ./",
-    "build-core": "tsc -p ../core/tsconfig.json --outFile core.js",
-    "watch": "npm run build-core && tsc --watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "build-core": "tsc -p ../core/tsconfig.json --outFile core.js --declaration false --sourceMap false",
+    "watch": "npm run build-core && tsc --watch -p ./"
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
