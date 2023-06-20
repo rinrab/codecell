@@ -115,10 +115,10 @@ function getHtml(text: string, headers: string): string {
 
 function escapeHtml(str: string): string {
     return str
-        .replace('&', "&amp;")
-        .replace('<', "&lt;")
-        .replace('>', "&gt;")
-        .replace('"', "&quot;");
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
 }
 
 function renderTable(values: (string | number | boolean | null)[][], styleTable: any, viewbox: any = null): string {
