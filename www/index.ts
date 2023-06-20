@@ -12,8 +12,8 @@ namespace Main {
     const saveAvalible = true;
     let calculated: Core.CalculatedTable;
     let jar: CodeJar;
-    let renderData: RenderData;
     let selectedPage: string;
+    let renderer: TableRenderer;
 
     const text =
         'A1: "Power of 2", "Col A + 1", "Col A * 2", "BANAnNnNAS"\n' +
@@ -58,8 +58,9 @@ namespace Main {
             jar.updateCode(decodeURI(document.location.hash.slice(1)));
         }
 
-        renderData = InitRender(<HTMLElement>document.querySelector(".table-container"),
-            <HTMLElement>document.getElementById("formula-line"));
+        renderer = new TableRenderer(
+            document.querySelector(".table-container"),
+            document.querySelector("#formula-line"));
 
         jar.onUpdate(() => {
             update();
@@ -78,6 +79,21 @@ namespace Main {
 
         document.getElementById("export-copy").addEventListener("click", () => {
             navigator.clipboard.writeText(exportText);
+        });
+
+        document.addEventListener("keydown", (ev) => {
+            if ((<any>ev.target).id != "editor") {
+                const replace: { [key: string]: string } = {
+                    "ArrowRight": "right",
+                    "ArrowLeft": "left",
+                    "ArrowDown": "down",
+                    "ArrowUp": "up"
+                }
+                if (replace[ev.code]) {
+                    renderer.relativeChangeSelection(replace[ev.code], ev.shiftKey);
+                    ev.preventDefault();
+                }
+            }
         });
 
         document.getElementById("export-download").addEventListener("click", () => {
@@ -167,10 +183,6 @@ namespace Main {
     }
 
     function render() {
-        renderTable({
-            values: calculated.tables[selectedPage].values,
-            styles: calculated.tables[selectedPage].styles,
-            formulas: calculated.tables[selectedPage].formulas,
-        }, renderData);
+        renderer.render(calculated, selectedPage);
     }
 }
