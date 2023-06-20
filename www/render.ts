@@ -22,16 +22,11 @@ class TableRenderer {
     render(calculated: Core.CalculatedTable, name: string) {
         const lastScrollLeft = this.container.scrollLeft;
         const lastScrollTop = this.container.scrollTop;
-        
+
         this.lastCalculated = calculated;
         if (name != this.lastName) {
             this.selection = new TableSelection(() => this.reRender());
         }
-        this.selection.width = 0;
-        for (const row of calculated.tables[name].values.data) {
-            this.selection.width = Math.max(this.selection.width, row.length);
-        }
-        this.selection.height = calculated.tables[name].values.data.length;
 
         this.lastName = name;
 
@@ -53,7 +48,7 @@ class TableRenderer {
         headerRow.innerHTML = "<td></td>";
         for (let i = 0; i < maxWidth; i++) {
             const newHeader = document.createElement("th");
-            if (isBetween(i, this.selection.startX, this.selection.endX)) {
+            if (i == this.selection.x) {
                 newHeader.classList.add("cell-header-selected");
             }
             newHeader.innerText = Core.alphabet[i];
@@ -69,7 +64,7 @@ class TableRenderer {
             const newHeader = document.createElement("th");
             newHeader.innerText = y.toString();
             newHeader.classList.add("cell-header");
-            if (isBetween(y, this.selection.startY, this.selection.endY)) {
+            if (y == this.selection.y) {
                 newHeader.classList.add("cell-header-selected");
             }
             newRow.append(newHeader);
@@ -94,14 +89,8 @@ class TableRenderer {
                 newCol.classList.add("cell");
                 newCol.classList.add(type);
 
-                if (x == this.selection.startX && y == this.selection.startY) {
+                if (x == this.selection.x && y == this.selection.y) {
                     newCol.classList.add("cell-selected");
-                }
-                if (isBetween(x, this.selection.startX, this.selection.endX) &&
-                    isBetween(y, this.selection.startY, this.selection.endY)) {
-                    if (!newCol.classList.contains("cell-selected")) {
-                        newCol.classList.add("select-area");
-                    }
                     toScroll.push(newCol);
                 }
             }
@@ -120,7 +109,7 @@ class TableRenderer {
         this.render(this.lastCalculated, this.lastName);
     }
 
-    relativeChangeSelection(key: string, doExpand: boolean): boolean {
+    relativeChangeSelection(key: string) {
         const delta: { [key: string]: number[] } = {
             "right": [1, 0],
             "left": [-1, 0],
@@ -129,64 +118,38 @@ class TableRenderer {
         }
 
         if (delta[key]) {
-            if (doExpand) {
-                this.selection.expand(delta[key][0], delta[key][1]);
-                return true;
-            } else {
-                this.selection.move(delta[key][0], delta[key][1]);
-                return true;
+            let maxWidth = 0;
+            const data = this.lastCalculated.tables[this.lastName].values.data;
+            for (let i = 0; i < data.length; i++) {
+                maxWidth = Math.max(maxWidth, data[i].length);
             }
+
+            this.selection.move(delta[key][0], delta[key][1], maxWidth, data.length);
         }
-        return false;
     }
 }
 
 class TableSelection {
-    startX: number;
-    startY: number;
-    endX: number;
-    endY: number;
-    renderCallBack: () => void;
-    width: number;
-    height: number;
+    x: number;
+    y: number;
+    render: () => any;
 
-    constructor(renderCallBack: () => void) {
-        this.startX = 0;
-        this.startY = 1;
-        this.endX = 0;
-        this.endY = 1;
-        this.renderCallBack = renderCallBack;
+    constructor(render: () => any) {
+        this.render = render;
+        this.x = 0;
+        this.y = 1;
     }
-    isMoveAvalible(dx: number, dy: number) {
-        return 0 <= this.endX + dx && this.endX + dx < this.width &&
-            1 <= this.endY + dy && this.endY + dy < this.height;
+
+    isMoveAvalible(dx: number, dy: number, width: number, height: number) {
+        return 0 <= this.x + dx && this.x + dx < width &&
+            1 <= this.y + dy && this.y + dy < height;
     }
-    move(dx: number, dy: number) {
-        if (this.startX == this.endX && this.startY == this.endY) {
-            if (this.isMoveAvalible(dx, dy)) {
-                this.endX += dx;
-                this.endY += dy;
-                this.startX = this.endX;
-                this.startY = this.endY;
-                this.renderCallBack();
-            }
-        } else {
-            this.endX = this.startX;
-            this.endY = this.startY;
-            if (this.isMoveAvalible(dx, dy)) {
-                this.endX += dx;
-                this.endY += dy;
-                this.startX = this.endX;
-                this.startY = this.endY;
-            }
-            this.renderCallBack();
-        }
-    }
-    expand(dx: number, dy: number) {
-        if (this.isMoveAvalible(dx, dy)) {
-            this.endX += dx;
-            this.endY += dy;
-            this.renderCallBack();
+
+    move(dx: number, dy: number, width: number, height: number) {
+        if (this.isMoveAvalible(dx, dy, width, height)) {
+            this.x += dx;
+            this.y += dy;
+            this.render();
         }
     }
 }

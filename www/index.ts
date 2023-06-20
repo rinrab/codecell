@@ -90,7 +90,7 @@ namespace Main {
                     "ArrowUp": "up"
                 }
                 if (replace[ev.code]) {
-                    renderer.relativeChangeSelection(replace[ev.code], ev.shiftKey);
+                    renderer.relativeChangeSelection(replace[ev.code]);
                     ev.preventDefault();
                 }
             }
