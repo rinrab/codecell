@@ -24,7 +24,8 @@ namespace Main {
         '# BANAnNnNAS\n' +
         'D2-D20: ="BANAnNnNAS" & " - " & A2';
 
-    const keyWordRegex = new RegExp('(\\b(?=\\w)' + (<string[]>Object.keys(formulas)).join('|') + '\\b(?<=\\w))', "gm");
+    const keyWordRegex = new RegExp('(\\b(?=\\w)' +
+        (<string[]>Object.keys(formulas)).join('|') + '\\b(?<=\\w))', "gm");
 
     let exportBtn: HTMLButtonElement;
     let exportFormula: HTMLSelectElement;
