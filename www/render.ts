@@ -147,7 +147,8 @@ function renderTable(data: Data, html: RenderData) {
                     newCol.classList.add("cell-selected");
                     toScroll.push(newCol);
                 }
-            } else if (above(x, html.selection.endX, html.selection.startX) && above(y, html.selection.endY, html.selection.startY)) {
+            } else if (above(x, html.selection.endX, html.selection.startX) && above(y, html.selection.endY,
+                html.selection.startY)) {
                 newCol.classList.add("select-area");
                 if (html.selection.startX == x && html.selection.startY == y) {
                     newCol.classList.add("cell-selected");
