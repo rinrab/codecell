@@ -1,11 +1,8 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
 import MarkdownIt = require('markdown-it');
 
 var codecell = require("../core");
-//import * as MarkdownIt from 'markdown-it';
 
 interface Previewer {
     panel: vscode.WebviewPanel;
@@ -15,8 +12,6 @@ interface Previewer {
 let previewers: { [key: string]: Previewer | null } = {};
 let extensionUri: vscode.Uri;
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
     extensionUri = context.extensionUri;
 
@@ -110,7 +105,8 @@ function getHtml(text: string, headers: string): string {
             if (Object.keys(calculated.tables).length > 1) {
                 rv += `<${headers}>${escapeHtml(key)}</${headers}>`;
             }
-            const rendered = renderTable(calculated.tables[key].values.data, calculated.tables[key].styles, calculated.viewbox);
+            const rendered = renderTable(calculated.tables[key].values.data, calculated.tables[key].styles,
+                calculated.viewbox);
             rv += rendered;
         }
     }
@@ -275,5 +271,4 @@ function updatePreview(uri: vscode.Uri) {
     }
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() { }
