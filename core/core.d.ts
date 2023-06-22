@@ -96,16 +96,16 @@ declare namespace Core {
         Zero?: ZeroFormat;
         Text?: TextFormat;
     }
-    interface NumberFormat {
+    export interface NumberFormat {
         Integer: IntegerFormat;
         Float: FloatFormat;
     }
-    interface IntegerFormat {
+    export interface IntegerFormat {
         MinimumDigits: number;
         ShowThousandSeparator?: true | undefined;
         Chars: IChar[];
     }
-    interface FloatFormat {
+    export interface FloatFormat {
         MinimumDigits: number | null;
         MaximumDigits: number | null;
         Chars: IChar[];
@@ -120,20 +120,22 @@ declare namespace Core {
     interface NumberChar {
         type: CharType.Number;
     }
-    const enum CharType {
+    export enum CharType {
         Digit = 0,
         Char = 1,
         Number = 2
     }
-    type IChar = DigitChar | TextChar | NumberChar;
+    export type IChar = DigitChar | TextChar | NumberChar;
     interface ZeroFormat {
         text: string;
     }
     interface TextFormat {
     }
-    export function ParseFormat(text: string): CellFormat;
-    export function Format(format: CellFormat, value: number | string): string;
     export {};
+}
+declare namespace Core {
+    function ParseFormat(text: string): CellFormat;
+    function Format(format: CellFormat, value: number | string): string;
 }
 declare namespace Core {
     interface IStyle {

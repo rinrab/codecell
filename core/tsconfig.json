@@ -16,6 +16,7 @@
     "./tree.ts",
     "./calc.ts",
     "./core.ts",
+    "format/types.ts",
     "format/main.ts",
     "./style.ts",
     "./cell-selector.ts",
