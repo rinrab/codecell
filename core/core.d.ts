@@ -102,7 +102,7 @@ declare namespace Core {
     }
     interface IntegerFormat {
         MinimumDigits: number;
-        ShowThousandSeparator?: boolean;
+        ShowThousandSeparator?: true | undefined;
         Text?: string;
     }
     interface FloatFormat {

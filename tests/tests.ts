@@ -397,3 +397,71 @@ QUnit.module("xlsx", () => {
         };
     });
 });
+
+QUnit.module("Number format", () => {
+    QUnit.test("Parse", (assert) => {
+        assert.deepEqual(Core.ParseFormat("0.0"), <Core.CellFormat> {
+            PositiveNumber: {
+                Integer: {
+                    MinimumDigits: 1
+                },
+                Float: {
+                    MinimumDigits: 1,
+                    MaximumDigits: 1
+                }
+            }
+        });
+
+        assert.deepEqual(Core.ParseFormat("#,##0.0#"), <Core.CellFormat> {
+            PositiveNumber: {
+                Integer: {
+                    MinimumDigits: 1,
+                    ShowThousandSeparator: true
+                },
+                Float: {
+                    MinimumDigits: 1,
+                    MaximumDigits: 2
+                }
+            }
+        });
+
+        assert.deepEqual(Core.ParseFormat("$#,##0.00"), <Core.CellFormat> {
+            PositiveNumber: {
+                Integer: {
+                    MinimumDigits: 1,
+                    ShowThousandSeparator: true,
+                    Text: "$"
+                },
+                Float: {
+                    MinimumDigits: 2,
+                    MaximumDigits: 2
+                }
+            }
+        });
+
+        assert.deepEqual(Core.ParseFormat("$#,##0.00;:( $#,##0.00"), <Core.CellFormat> {
+            PositiveNumber: {
+                Integer: {
+                    MinimumDigits: 1,
+                    ShowThousandSeparator: true,
+                    Text: "$"
+                },
+                Float: {
+                    MinimumDigits: 2,
+                    MaximumDigits: 2
+                }
+            },
+            NegativeNumber: {
+                Integer: {
+                    MinimumDigits: 1,
+                    ShowThousandSeparator: true,
+                    Text: ":( $"
+                },
+                Float: {
+                    MinimumDigits: 2,
+                    MaximumDigits: 2
+                }
+            }
+        });
+    });
+});

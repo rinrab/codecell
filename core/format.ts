@@ -13,7 +13,7 @@ namespace Core {
 
     interface IntegerFormat {
         MinimumDigits: number;
-        ShowThousandSeparator?: boolean;
+        ShowThousandSeparator?: true | undefined;
         Text?: string;
     }
 
@@ -28,7 +28,7 @@ namespace Core {
     }
 
     interface TextFormat {
-        
+
     }
 
     export function ParseFormat(text: string): CellFormat {
@@ -37,6 +37,11 @@ namespace Core {
         if (tokens.length == 1) {
             return {
                 PositiveNumber: ParseNumberFormat(tokens[0])
+            }
+        } else if (tokens.length == 2) {
+            return {
+                PositiveNumber: ParseNumberFormat(tokens[0]),
+                NegativeNumber: ParseNumberFormat(tokens[1])
             }
         } else {
             throw new Error("Incorrect tokens count: " + tokens.length);
@@ -81,9 +86,7 @@ namespace Core {
                 rv.MinimumDigits = 1;
             }
 
-            if (text.search(/#,##(#|0)$/) == -1) {
-                rv.ShowThousandSeparator = false;
-            } else {
+            if (text.search(/#,##(#|0)$/) != -1) {
                 rv.ShowThousandSeparator = true;
             }
             return rv;
