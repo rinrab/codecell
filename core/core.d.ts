@@ -103,13 +103,29 @@ declare namespace Core {
     interface IntegerFormat {
         MinimumDigits: number;
         ShowThousandSeparator?: true | undefined;
-        Text?: string;
+        Chars: IChar[];
     }
     interface FloatFormat {
         MinimumDigits: number | null;
         MaximumDigits: number | null;
-        Text?: string;
+        Chars: IChar[];
     }
+    interface DigitChar {
+        type: CharType.Digit;
+    }
+    interface TextChar {
+        type: CharType.Char;
+        value: string;
+    }
+    interface NumberChar {
+        type: CharType.Number;
+    }
+    const enum CharType {
+        Digit = 0,
+        Char = 1,
+        Number = 2
+    }
+    type IChar = DigitChar | TextChar | NumberChar;
     interface ZeroFormat {
         text: string;
     }

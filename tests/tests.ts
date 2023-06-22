@@ -399,77 +399,16 @@ QUnit.module("xlsx", () => {
 });
 
 QUnit.module("Number format", () => {
-    QUnit.test("Parse", (assert) => {
-        assert.deepEqual(Core.ParseFormat("0.0"), <Core.CellFormat> {
-            PositiveNumber: {
-                Integer: {
-                    MinimumDigits: 1
-                },
-                Float: {
-                    MinimumDigits: 1,
-                    MaximumDigits: 1
-                }
-            }
-        });
-
-        assert.deepEqual(Core.ParseFormat("#,##0.0#"), <Core.CellFormat> {
-            PositiveNumber: {
-                Integer: {
-                    MinimumDigits: 1,
-                    ShowThousandSeparator: true
-                },
-                Float: {
-                    MinimumDigits: 1,
-                    MaximumDigits: 2
-                }
-            }
-        });
-
-        assert.deepEqual(Core.ParseFormat("$#,##0.00"), <Core.CellFormat> {
-            PositiveNumber: {
-                Integer: {
-                    MinimumDigits: 1,
-                    ShowThousandSeparator: true,
-                    Text: "$"
-                },
-                Float: {
-                    MinimumDigits: 2,
-                    MaximumDigits: 2
-                }
-            }
-        });
-
-        assert.deepEqual(Core.ParseFormat("$#,##0.00;:( $#,##0.00"), <Core.CellFormat> {
-            PositiveNumber: {
-                Integer: {
-                    MinimumDigits: 1,
-                    ShowThousandSeparator: true,
-                    Text: "$"
-                },
-                Float: {
-                    MinimumDigits: 2,
-                    MaximumDigits: 2
-                }
-            },
-            NegativeNumber: {
-                Integer: {
-                    MinimumDigits: 1,
-                    ShowThousandSeparator: true,
-                    Text: ":( $"
-                },
-                Float: {
-                    MinimumDigits: 2,
-                    MaximumDigits: 2
-                }
-            }
-        });
-    });
-
     QUnit.test("Format", (assert) => {
         assert.equal(Core.Format(Core.ParseFormat("0.0"), 123.456), "123.5");
         assert.equal(Core.Format(Core.ParseFormat("0.0#"), 123.456), "123.46");
         assert.equal(Core.Format(Core.ParseFormat("0.0#"), 123.4), "123.4");
         assert.equal(Core.Format(Core.ParseFormat("0.00"), 123.4), "123.40");
         assert.equal(Core.Format(Core.ParseFormat("#,##0.00"), 123000.456), "123,000.46");
+
+        assert.equal(Core.Format(Core.ParseFormat("$(0.0)"), 123.456), "$(123.5)");
+        assert.equal(Core.Format(Core.ParseFormat("$0.0;$(0.0)"), 123.456), "$123.5");
+        assert.equal(Core.Format(Core.ParseFormat("$0.0;$(0.0)"), -123.456), "$(-123.5)");
+        assert.equal(Core.Format(Core.ParseFormat("$0.0;$(0.0)"), 0), "$0.0");
     });
 });
