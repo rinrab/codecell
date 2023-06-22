@@ -80,7 +80,6 @@ namespace Core {
             }
 
             text = text.slice(i);
-            console.log(text);
 
             if (text[text.length - 1] == '0') {
                 rv.MinimumDigits = 1;
