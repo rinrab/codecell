@@ -85,7 +85,7 @@ namespace Core {
                 rv.MinimumDigits = 1;
             }
 
-            if (text.search(/#,##(#|0)$/) != -1) {
+            if (text.search(/(#|0),(#|0)/) != -1) {
                 rv.ShowThousandSeparator = true;
             }
             return rv;
