@@ -135,6 +135,8 @@ declare namespace Core {
 }
 declare namespace Core {
     function ParseFormat(text: string): CellFormat;
+}
+declare namespace Core {
     function Format(format: CellFormat, value: number | string): string;
 }
 declare namespace Core {
