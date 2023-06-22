@@ -19,9 +19,29 @@ namespace Core {
     function ParseNumberFormat(text: string): NumberFormat {
         const tokens = text.split('.');
 
+        const colors = [
+            "[Black]",
+            "[Green]",
+            "[White]",
+            "[Blue]",
+            "[Magenta]",
+            "[Yellow]",
+            "[Cyan]",
+            "[Red]",
+        ];
+
+        const colorRegex = /(\[(?:(?!\]).)*(?:\]))/;
+        let match = text.match(colorRegex);
+        let color = null;
+        if (match && colors.indexOf(match[0]) != -1) {
+            color = match[0].replace(/\[|\]/g, "").toLowerCase();
+        }
+        text = text.replace(colorRegex, "");
+
         return {
             Integer: ParseIntegerFormat(tokens[0]),
-            Float: ParseFloatFormat(tokens[1])
+            Float: ParseFloatFormat(tokens[1]),
+            Color: color
         }
     }
 

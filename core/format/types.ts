@@ -9,6 +9,7 @@ namespace Core {
     export interface NumberFormat {
         Integer: IntegerFormat;
         Float: FloatFormat;
+        Color: string;
     }
 
     export interface IntegerFormat {
