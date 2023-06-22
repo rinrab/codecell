@@ -198,7 +198,6 @@ namespace Core {
 
             let str = formater.format(value);
             const tokens = str.split(".");
-            console.log(numberFormat);
             if (tokens.length == 1) {
                 return applyChars(numberFormat.Integer.Chars, str)
             } else {
