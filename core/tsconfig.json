@@ -16,6 +16,7 @@
     "./tree.ts",
     "./calc.ts",
     "./core.ts",
+    "format.ts",
     "./style.ts",
     "./cell-selector.ts",
     "./ast-formula/tokenizer.ts",

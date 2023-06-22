@@ -89,7 +89,35 @@ declare namespace Core {
     let errors: IError[];
     function parse(text: string): CalculatedTable;
 }
-declare let module: any;
+declare namespace Core {
+    export interface CellFormat {
+        PositiveNumber?: NumberFormat;
+        NegativeNumber?: NumberFormat;
+        Zero?: ZeroFormat;
+        Text?: TextFormat;
+    }
+    interface NumberFormat {
+        Integer: IntegerFormat;
+        Float: FloatFormat;
+    }
+    interface IntegerFormat {
+        MinimumDigits: number;
+        ShowThousandSeparator?: boolean;
+        Text?: string;
+    }
+    interface FloatFormat {
+        MinimumDigits: number | null;
+        MaximumDigits: number | null;
+        Text?: string;
+    }
+    interface ZeroFormat {
+        text: string;
+    }
+    interface TextFormat {
+    }
+    export function ParseFormat(text: string): CellFormat;
+    export {};
+}
 declare namespace Core {
     interface IStyle {
         background?: string;
@@ -371,3 +399,4 @@ declare namespace ExportTable {
     function MarkDown(table: Core.Table<string | number | boolean>, minify: boolean): string;
     function CSV(table: Core.Table<string | number | boolean | null>, minify: boolean, isFormulas: boolean): string;
 }
+declare let module: any;
