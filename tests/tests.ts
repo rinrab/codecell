@@ -464,4 +464,12 @@ QUnit.module("Number format", () => {
             }
         });
     });
+
+    QUnit.test("Format", (assert) => {
+        assert.equal(Core.Format(Core.ParseFormat("0.0"), 123.456), "123.5");
+        assert.equal(Core.Format(Core.ParseFormat("0.0#"), 123.456), "123.46");
+        assert.equal(Core.Format(Core.ParseFormat("0.0#"), 123.4), "123.4");
+        assert.equal(Core.Format(Core.ParseFormat("0.00"), 123.4), "123.40");
+        assert.equal(Core.Format(Core.ParseFormat("#,##0.00"), 123000.456), "123,000.46");
+    });
 });

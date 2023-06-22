@@ -116,6 +116,7 @@ declare namespace Core {
     interface TextFormat {
     }
     export function ParseFormat(text: string): CellFormat;
+    export function Format(format: CellFormat, value: number | string): string;
     export {};
 }
 declare namespace Core {

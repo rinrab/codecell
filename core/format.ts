@@ -125,4 +125,27 @@ namespace Core {
             }
         }
     }
+
+    export function Format(format: CellFormat, value: number | string): string {
+        if (typeof value == "number") {
+            let numberFormat = (value < 0) ? format.NegativeNumber ||
+                format.PositiveNumber : format.PositiveNumber;
+
+            const formater = new Intl.NumberFormat("en-us", {
+                useGrouping: numberFormat.Integer.ShowThousandSeparator || false,
+                // minimumIntegerDigits: numberFormat.Integer.MinimumDigits,
+                minimumFractionDigits: numberFormat.Float.MinimumDigits,
+                maximumFractionDigits: numberFormat.Float.MaximumDigits,
+            });
+
+            const str = formater.format(value);
+            return str;
+        } else {
+            if (format.Text) {
+                return value;
+            } else {
+                return value;
+            }
+        }
+    }
 }
