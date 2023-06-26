@@ -53,11 +53,11 @@ namespace Core {
         if (text.length == 0) {
             return {
                 MinimumDigits: 0,
-                Chars: []
+                Chars: [],
+                Scale: 1
             }
         } else {
-            let scale = 1;
-            const rv: IntegerFormat = { MinimumDigits: 0, Chars: [] };
+            const rv: IntegerFormat = { MinimumDigits: 0, Chars: [], Scale: 1 };
             let i = 0;
             while (i < text.length) {
                 if (text[i] == '#' || text[i] == '0') {
@@ -65,7 +65,7 @@ namespace Core {
                 } else if (text[i] == ',') {
                     if (text[i - 1] != '#' && text[i - 1] != '0' ||
                         text[i + 1] != '#' && text[i + 1] != '0') {
-                        scale *= 1000;
+                        rv.Scale *= 1000;
                     }
                 } else {
                     rv.Chars.push({
@@ -86,7 +86,7 @@ namespace Core {
                 } else if (text[i] == ',') {
                     if (text[i - 1] != '#' && text[i - 1] != '0' ||
                         text[i + 1] != '#' && text[i + 1] != '0') {
-                        scale *= 1000;
+                        rv.Scale *= 1000;
                     }
                 } else {
                     rv.Chars.push({
@@ -97,7 +97,6 @@ namespace Core {
                 i++;
             }
             rv.Chars.reverse();
-            rv.Scale = scale;
 
             if (text[text.length - 1] == '0') {
                 rv.MinimumDigits = 1;
