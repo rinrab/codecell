@@ -17,8 +17,6 @@ namespace Core {
     }
 
     function ParseNumberFormat(text: string): NumberFormat {
-        const tokens = text.split('.');
-
         const colors = [
             "[Black]",
             "[Green]",
@@ -31,17 +29,23 @@ namespace Core {
         ];
 
         const colorRegex = /(\[(?:(?!\]).)*(?:\]))/;
-        let match = text.match(colorRegex);
+        let colorMatch = text.match(colorRegex);
         let color = null;
-        if (match && colors.indexOf(match[0]) != -1) {
-            color = match[0].replace(/\[|\]/g, "").toLowerCase();
+        if (colorMatch && colors.indexOf(colorMatch[0]) != -1) {
+            color = colorMatch[0].replace(/\[|\]/g, "").toLowerCase();
+            text = text.replace(colorRegex, "");
         }
-        text = text.replace(colorRegex, "");
+
+        const tokens = text.split('.');
+
+        const Integer = ParseIntegerFormat(tokens[0]);
+        const Float = ParseFloatFormat(tokens[1]);
 
         return {
-            Integer: ParseIntegerFormat(tokens[0]),
-            Float: ParseFloatFormat(tokens[1]),
-            Color: color
+            Integer: Integer,
+            Float: Float,
+            Color: color,
+            Scale: Integer.Scale * Float.Scale
         }
     }
 
@@ -52,11 +56,17 @@ namespace Core {
                 Chars: []
             }
         } else {
+            let scale = 1;
             const rv: IntegerFormat = { MinimumDigits: 0, Chars: [] };
             let i = 0;
             while (i < text.length) {
                 if (text[i] == '#' || text[i] == '0') {
                     break;
+                } else if (text[i] == ',') {
+                    if (text[i - 1] != '#' && text[i - 1] != '0' ||
+                        text[i + 1] != '#' && text[i + 1] != '0') {
+                        scale *= 1000;
+                    }
                 } else {
                     rv.Chars.push({
                         type: CharType.Char,
@@ -74,6 +84,10 @@ namespace Core {
                         type: CharType.Digit
                     });
                 } else if (text[i] == ',') {
+                    if (text[i - 1] != '#' && text[i - 1] != '0' ||
+                        text[i + 1] != '#' && text[i + 1] != '0') {
+                        scale *= 1000;
+                    }
                 } else {
                     rv.Chars.push({
                         type: CharType.Char,
@@ -83,6 +97,7 @@ namespace Core {
                 i++;
             }
             rv.Chars.reverse();
+            rv.Scale = scale;
 
             if (text[text.length - 1] == '0') {
                 rv.MinimumDigits = 1;
@@ -100,9 +115,11 @@ namespace Core {
             const rv: FloatFormat = {
                 MaximumDigits: null,
                 MinimumDigits: null,
-                Chars: []
+                Chars: [],
+                Scale: 1
             };
 
+            let scale = 1;
             for (let i = 0; i < text.length; i++) {
                 if (text[i] == '0') {
                     rv.MaximumDigits = i + 1;
@@ -120,6 +137,8 @@ namespace Core {
                     rv.Chars.push({
                         type: CharType.Digit
                     })
+                } else if (text[i] == ',') {
+                    scale *= 1000;
                 } else if (text[i] == '"') {
                     i++;
                     while (i < text.length) {
@@ -141,12 +160,15 @@ namespace Core {
                 }
             }
 
+            rv.Scale = scale;
+
             return rv;
         } else {
             return {
                 MinimumDigits: 0,
                 MaximumDigits: 0,
-                Chars: []
+                Chars: [],
+                Scale: 1
             }
         }
     }

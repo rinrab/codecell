@@ -100,16 +100,19 @@ declare namespace Core {
         Integer: IntegerFormat;
         Float: FloatFormat;
         Color: string;
+        Scale?: number;
     }
     export interface IntegerFormat {
         MinimumDigits: number;
         ShowThousandSeparator?: true | undefined;
         Chars: IChar[];
+        Scale?: number;
     }
     export interface FloatFormat {
         MinimumDigits: number | null;
         MaximumDigits: number | null;
         Chars: IChar[];
+        Scale?: number;
     }
     interface DigitChar {
         type: CharType.Digit;

@@ -4,6 +4,8 @@ namespace Core {
             let numberFormat = (value < 0) ? format.NegativeNumber ||
                 format.PositiveNumber : format.PositiveNumber;
 
+            value /= numberFormat.Scale;
+
             const formater = new Intl.NumberFormat("en-us", {
                 useGrouping: numberFormat.Integer.ShowThousandSeparator || false,
                 // minimumIntegerDigits: numberFormat.Integer.MinimumDigits,
@@ -14,7 +16,7 @@ namespace Core {
             let str = formater.format(value);
             const tokens = str.split(".");
             if (tokens.length == 1) {
-                return applyChars(numberFormat.Integer.Chars, str)
+                return applyChars(numberFormat.Integer.Chars, str, true)
             } else {
                 return applyChars(numberFormat.Integer.Chars, tokens[0], true) + "."
                     + applyChars(numberFormat.Float.Chars, tokens[1]);
