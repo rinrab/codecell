@@ -8,12 +8,19 @@ namespace Core {
 
             const formater = new Intl.NumberFormat("en-us", {
                 useGrouping: numberFormat.Integer.ShowThousandSeparator || false,
-                // minimumIntegerDigits: numberFormat.Integer.MinimumDigits,
                 minimumFractionDigits: numberFormat.Float.MinimumDigits,
                 maximumFractionDigits: numberFormat.Float.MaximumDigits,
             });
 
             let str = formater.format(value);
+            if (numberFormat.Integer.MinimumDigits == 0) {
+                if (value == 0) {
+                    str = ".";
+                } else if (-1 < value && value < 1) {
+                    str = str.replace(/^./, "");
+                }
+            }
+
             const tokens = str.split(".");
             if (tokens.length == 1) {
                 return applyChars(numberFormat.Integer.Chars, str, true)

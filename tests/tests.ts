@@ -414,5 +414,10 @@ QUnit.module("Number format", () => {
         assert.equal(Core.Format(Core.ParseFormat("0.0,"), 1234), "1.2");
         assert.equal(Core.Format(Core.ParseFormat("0.0, K"), 1234), "1.2 K");
         assert.equal(Core.Format(Core.ParseFormat("$0,, M"), 123456789), "$123 M");
+
+        assert.equal(Core.Format(Core.ParseFormat("#.##"), 0.123), ".12");
+        assert.equal(Core.Format(Core.ParseFormat("#.##"), 1.123), "1.12");
+        assert.equal(Core.Format(Core.ParseFormat("0.##"), 0.123), "0.12");
+        assert.equal(Core.Format(Core.ParseFormat("#.#"), 0), ".");
     });
 });
