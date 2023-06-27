@@ -18,22 +18,30 @@ namespace Core {
 
     function ParseNumberFormat(text: string): NumberFormat {
         const colors = [
-            "[Black]",
-            "[Green]",
-            "[White]",
-            "[Blue]",
-            "[Magenta]",
-            "[Yellow]",
-            "[Cyan]",
-            "[Red]",
+            "Black",
+            "Green",
+            "White",
+            "Blue",
+            "Magenta",
+            "Yellow",
+            "Cyan",
+            "Red",
         ];
 
         const colorRegex = /(\[(?:(?!\]).)*(?:\]))/;
         let colorMatch = text.match(colorRegex);
         let color = null;
-        if (colorMatch && colors.indexOf(colorMatch[0]) != -1) {
+        if (colorMatch && colors.indexOf(colorMatch[0].replace(/\[|\]/g, "")) != -1) {
             color = colorMatch[0].replace(/\[|\]/g, "").toLowerCase();
             text = text.replace(colorRegex, "");
+        }
+
+        const bgRegex = /(\{(?:(?!\}).)*(?:\}))/;
+        let bgMatch = text.match(bgRegex);
+        let bg = null;
+        if (bgMatch && colors.indexOf(bgMatch[0].replace(/\{|\}/g, "")) != -1) {
+            bg = bgMatch[0].replace(/\{|\}/g, "").toLowerCase();
+            text = text.replace(bgRegex, "");
         }
 
         const tokens = text.split('.');
@@ -45,6 +53,7 @@ namespace Core {
             Integer: Integer,
             Float: Float,
             Color: color,
+            Backgrond: bg,
             Scale: Integer.Scale * Float.Scale
         }
     }

@@ -10,6 +10,7 @@ namespace Core {
         Integer: IntegerFormat;
         Float: FloatFormat;
         Color: string;
+        Backgrond: string;
         Scale: number;
     }
 
